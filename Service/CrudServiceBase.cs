@@ -35,17 +35,25 @@ namespace AppCrudWeb.Service
             Cancella(id);
             return true;
         }
-
-        public virtual IEnumerable<TEntity> GetAll()
+        
+        public virtual IEnumerable<TEntity> GetAll(int pageSize,int pageNumber)
         {
-            return OttieniTutti();
+             var entities = OttieniTutti().OrderBy(e => e.Name).ToList();
+
+             return entities
+       .Skip((pageNumber - 1) * pageSize)
+       .Take(pageSize)
+       .ToList(); ;
+
         }
+        
 
         protected abstract TEntity Insert(TEntity entity);
         protected abstract TEntity Get(int id);
         protected abstract TEntity Modifica(TEntity entity, TDto dto);
         protected abstract bool Cancella(int id);
         protected abstract IEnumerable<TEntity> OttieniTutti();
+        //protected abstract IEnumerable<TEntity> GetPage(int pageNumber, int pageSize); 
         protected abstract TDto MapToDto(TEntity entity);
         protected abstract TEntity MapToEntity(TDto dto);
 

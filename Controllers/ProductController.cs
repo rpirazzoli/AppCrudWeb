@@ -1,6 +1,8 @@
 ﻿using AppCrudWeb.Model;
 using AppCrudWeb.Service;
 using Microsoft.AspNetCore.Mvc;
+using AppCrudWeb.Dto;
+
 
 namespace AppCrudWeb.Controllers
 {
@@ -26,9 +28,9 @@ namespace AppCrudWeb.Controllers
 
         //operazione Read (GETALL) - restituisce tutti i prodotti
         [HttpGet("GetAll")]
-        public ActionResult<UserDto> GeAll()
+        public ActionResult<UserDto> GetAll(int pageSize,int pageNumber)
         {
-            var product = _productService.GetAll();
+            var product = _productService.GetAll( pageSize, pageNumber);
             return Ok(product);
         }
 

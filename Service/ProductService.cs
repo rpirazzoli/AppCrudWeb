@@ -1,4 +1,6 @@
 ﻿using AppCrudWeb.Model;
+using AppCrudWeb.Dto;
+
 
 namespace AppCrudWeb.Service
 {
@@ -14,7 +16,7 @@ namespace AppCrudWeb.Service
 
         protected override Product Insert(Product product)
         {
-            product.Id = _idCounter;
+            product.Id = _idCounter++;
             repository.Add(product);
             return product;
         }
@@ -64,5 +66,14 @@ namespace AppCrudWeb.Service
                 Price = entity.Price
             };
         }
+/*
+        protected override IEnumerable<Product> GetPage(int pageNumber, int pageSize)
+        {
+            var skip = (pageNumber - 1)* pageSize;
+            return repository
+       .Skip(skip)  
+       .Take(pageSize)  
+       .ToList();
+        }*/
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AppCrudWeb.Model;
+using AppCrudWeb.Dto;
 
 namespace AppCrudWeb.Service
 {
@@ -14,7 +15,7 @@ namespace AppCrudWeb.Service
 
         protected override User Insert(User entity)
         {
-            entity.Id = _idCounter;
+            entity.Id = _idCounter++;
             repository.Add(entity);
             return entity;
         }
@@ -31,11 +32,20 @@ namespace AppCrudWeb.Service
             entity.Email = dto.Email;
             return entity;
         }
-
+//--------------GETALL ORDINATA E PAGINATA
         protected override IEnumerable<User> OttieniTutti()
         {
             return repository;
         }
+      /*  protected override IEnumerable<User> GetPage(int pageNumber, int pageSize)
+        {
+            var skip = (pageNumber - 1) * pageSize;
+            return repository
+       .Skip(skip)
+       .Take(pageSize)
+       .ToList();
+        }*/
+//----------------------------------------
 
         protected override bool Cancella(int id)
         {
@@ -65,5 +75,7 @@ namespace AppCrudWeb.Service
                 Email = entity.Email
             };
         }
+
+        
     }
 }

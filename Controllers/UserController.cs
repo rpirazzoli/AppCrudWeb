@@ -1,6 +1,8 @@
 ﻿using AppCrudWeb.Model;
 using AppCrudWeb.Service;
 using Microsoft.AspNetCore.Mvc;
+using AppCrudWeb.Dto;
+
 
 namespace AppCrudWeb.Controllers
 {
@@ -28,9 +30,9 @@ namespace AppCrudWeb.Controllers
 
         //operazione Read (GETALL) - restituisce tutti gli utenti
         [HttpGet("GetAll")]
-        public ActionResult<UserDto> GeAll()
+        public ActionResult<UserDto> GetAll(int pageSize, int pageNumber)
         {
-            var user = _userService.GetAll();
+            var user = _userService.GetAll(pageSize,pageNumber);
             return Ok(user);
         }
 
