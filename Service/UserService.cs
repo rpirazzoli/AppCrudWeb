@@ -7,8 +7,8 @@ namespace AppCrudWeb.Service
     {
         private static List<User> repository = new List<User>
     {
-        new User { Id = 1, Name = "fwef", Email = "@@" },
-        new User { Id = 2, Name = "fwf", Email = "@@" }
+        new User { Id = 1, Name = "zyx@", Email = "@@" },
+        new User { Id = 2, Name = "abc@", Email = "@@" }
     };
         private int _idCounter = repository.Max(x => x.Id) + 1;
 
@@ -32,20 +32,13 @@ namespace AppCrudWeb.Service
             entity.Email = dto.Email;
             return entity;
         }
-//--------------GETALL ORDINATA E PAGINATA
+
         protected override IEnumerable<User> OttieniTutti()
         {
             return repository;
         }
-      /*  protected override IEnumerable<User> GetPage(int pageNumber, int pageSize)
-        {
-            var skip = (pageNumber - 1) * pageSize;
-            return repository
-       .Skip(skip)
-       .Take(pageSize)
-       .ToList();
-        }*/
-//----------------------------------------
+      
+
 
         protected override bool Cancella(int id)
         {

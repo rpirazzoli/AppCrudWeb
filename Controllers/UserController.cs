@@ -29,10 +29,11 @@ namespace AppCrudWeb.Controllers
         }
 
         //operazione Read (GETALL) - restituisce tutti gli utenti
+       
         [HttpGet("GetAll")]
-        public ActionResult<UserDto> GetAll(int pageSize, int pageNumber)
+        public ActionResult<UserDto> GetAll(int pageSize, int pageNumber,  string sort=null) //SORT DICHIARATO COMR NULL - SENNò NELLO SWAGGER IL SORT ERA OBBLIGATORIO
         {
-            var user = _userService.GetAll(pageSize,pageNumber);
+            var user = _userService.GetAll(pageSize,pageNumber, sort);
             return Ok(user);
         }
 
@@ -50,7 +51,7 @@ namespace AppCrudWeb.Controllers
         {
 
             var user = _userService.Update(id, userDto);
-            if (UpdateUser == null) return NotFound();
+            if (user == null) return NotFound();
             return Ok(user);
         }
 

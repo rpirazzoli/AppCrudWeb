@@ -28,9 +28,9 @@ namespace AppCrudWeb.Controllers
 
         //operazione Read (GETALL) - restituisce tutti i prodotti
         [HttpGet("GetAll")]
-        public ActionResult<UserDto> GetAll(int pageSize,int pageNumber)
+        public ActionResult<UserDto> GetAll(int pageSize,int pageNumber, string sort=null) //SORT DICHIARATO COMR NULL - SENNò NELLO SWAGGER IL SORT ERA OBBLIGATORIO
         {
-            var product = _productService.GetAll( pageSize, pageNumber);
+            var product = _productService.GetAll( pageSize, pageNumber,sort);
             return Ok(product);
         }
 
@@ -47,7 +47,7 @@ namespace AppCrudWeb.Controllers
         public ActionResult<ProductDto> UpdateProduct(int id, ProductDto productDto)
         {
             var product = _productService.Update(id, productDto);
-            if (UpdateProduct == null) return NotFound();
+            if (product == null) return NotFound();
             return Ok(product);
         }
 

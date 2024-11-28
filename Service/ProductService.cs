@@ -8,8 +8,8 @@ namespace AppCrudWeb.Service
     {
         private static List<Product> repository = new List<Product>
     {
-        new Product { Id = 1, Name = "Prodotto 1", Price = "10" },
-        new Product { Id = 2, Name = "Prodotto 2", Price = "20" }
+        new Product { Id = 1, Name = "Prodotto 1", Price = 10 },
+        new Product { Id = 2, Name = "Prodotto 2", Price = 20 }
     };
 
         private int _idCounter = repository.Max(x => x.Id) + 1;
@@ -66,14 +66,6 @@ namespace AppCrudWeb.Service
                 Price = entity.Price
             };
         }
-/*
-        protected override IEnumerable<Product> GetPage(int pageNumber, int pageSize)
-        {
-            var skip = (pageNumber - 1)* pageSize;
-            return repository
-       .Skip(skip)  
-       .Take(pageSize)  
-       .ToList();
-        }*/
+
     }
 }

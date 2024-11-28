@@ -1,4 +1,5 @@
-﻿using AppCrudWeb.Model;
+﻿using System.Reflection;
+using AppCrudWeb.Model;
 
 namespace AppCrudWeb.Service
 {
@@ -35,25 +36,48 @@ namespace AppCrudWeb.Service
             Cancella(id);
             return true;
         }
-        
-        public virtual IEnumerable<TEntity> GetAll(int pageSize,int pageNumber)
+
+        public virtual IEnumerable<TEntity> GetAll(int pageSize, int pageNumber, string sort)
         {
-             var entities = OttieniTutti().OrderBy(e => e.Name).ToList();
+            var entities = OttieniTutti();
 
-             return entities
-       .Skip((pageNumber - 1) * pageSize)
-       .Take(pageSize)
-       .ToList(); ;
+            // ordina in base a sort
+            if (!string.IsNullOrEmpty(sort))
+            {                                                   //CASE SENSITIVE       //SOLO PROPRIETA PUBLICHE    SOLO VARIABILI D'ISTANZA
+                var sortProperty = typeof(TEntity).GetProperty(sort, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                if (sortProperty != null)
+                {
+                    entities = entities.OrderBy(e => sortProperty.GetValue(e, null));
+                }
+            }
 
+            else
+            {
+                //se sort è nullo o vuoto ordina per ID
+                entities = entities.OrderBy(e => e.Id);
+                
+            }
+
+            if (pageSize == 0)
+                return entities.ToList();
+
+
+            return entities
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
         }
+
+
+
         
+
 
         protected abstract TEntity Insert(TEntity entity);
         protected abstract TEntity Get(int id);
         protected abstract TEntity Modifica(TEntity entity, TDto dto);
         protected abstract bool Cancella(int id);
         protected abstract IEnumerable<TEntity> OttieniTutti();
-        //protected abstract IEnumerable<TEntity> GetPage(int pageNumber, int pageSize); 
         protected abstract TDto MapToDto(TEntity entity);
         protected abstract TEntity MapToEntity(TDto dto);
 
